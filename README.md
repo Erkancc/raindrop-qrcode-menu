@@ -12,7 +12,7 @@ We create an account on Raindrop.io and add menu photos, descriptions, and prici
 
 ### 2) Creating an API link
 
- - [Raindrop.io Integration]{:class="text-underline" rel="nofollow" target="_blank"} > For Developers > Create a New Application
+ - [Raindrop.io Integration](https://app.raindrop.io/settings/integrations) > For Developers > Create a New Application
  - Enter the application name (e.g., x.com) and accept the agreement
  - Generate a test token and copy it
 
@@ -26,6 +26,10 @@ We assign it to the relevant variable.
 
 ### Screenshot 
 ![QR Code Menü Raindrop](https://hasanunal.github.io/raindrop-qrcode-menu/screenshot.png?v=2)
+
+
+### Bonus: QR Code Menu with Google Sheets - no code
+[github/google-sheets-qrcode-menu](https://github.com/hasanunal/google-sheets-qrcode-menu)
 
 ### Bonus: Publishing
 If you don't have hosting and want to publish quickly, you can use one of the following services:
