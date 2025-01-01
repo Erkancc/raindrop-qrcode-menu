@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100">
+    <div class="overlay"></div>
+    <div class="flex h-screen overflow-hidden">
+        <!-- Drawer Menu -->
+        <div id="drawer" class="fixed lg:relative w-64 h-full bg-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+            <div class="bg-gray-600 relative">
+                <h2 class="text-white text-xl p-4">Kategoriler</h2>
+                <button id="close-button" class="text-white text-2xl focus:outline-none absolute right-4 top-0 translate-y-2/4">
+                    ✕
+                </button>
+            </div>
+            <div class="px-4 pb-4">
+                <nav id="categoryList" class="space-y-2">
+                    <!-- Categories will be populated here -->
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <header class="bg-slate-100 shadow-md lg:flex items-center justify-between sticky top-0 z-30">
+                <div class="relative h-14 flex items-center justify-center">
+                    <button id="menuToggle" class="p-4 lg:hidden absolute left-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <div class="text-2xl font-semibold text-center">Restaurant Menu</div>
+                </div>
+            </header>
+
+            <main class="container mx-auto px-4">
+                <div id="menuContent" class="space-y-8">
+                    <!-- Menu items will be populated here -->
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
