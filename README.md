@@ -24,6 +24,10 @@ const accessToken = "TOKEN";
 
 We assign it to the relevant variable.
 
+### Screen Recording
+
+https://github.com/user-attachments/assets/9b4890d3-5b64-4421-98ac-f201fc3c9c05
+
 ### Screenshot 
 ![QR Code Menü Raindrop](https://hasanunal.github.io/raindrop-qrcode-menu/screenshot.png?v=2)
 
