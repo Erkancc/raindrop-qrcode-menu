@@ -1,26 +1,18 @@
 const accessToken = "7909ec52-e118-4e08-a3b9-c8bf8e5079f0";
 const collectionsUrl = "https://api.raindrop.io/rest/v1/collections";
-const drawer = document.getElementById('drawer');
-const menuToggle = document.getElementById('menuToggle');
-const categoryList = document.getElementById('categoryList');
+const categoryTabs = document.getElementById('categoryTabs').querySelector('ul');
 const menuContent = document.getElementById('menuContent');
-const body = document.body;
-
-// Toggle mobile menu
-menuToggle.addEventListener('click', () => {
-    drawer.classList.toggle('translate-x-0');
-    drawer.classList.toggle('-translate-x-full');
-    body.classList.toggle('drawer-open');
-});
-// Close drawer when clicking overlay or close button
-const closeDrawer = () => {
-    drawer.classList.remove('translate-x-0');
-    drawer.classList.add('-translate-x-full');
-    body.classList.remove('drawer-open');
-};
-
-document.querySelector('.overlay').addEventListener('click', closeDrawer);
-document.getElementById('close-button').addEventListener('click', closeDrawer);
+const cart = [];
+const cartButton = document.getElementById('cartButton');
+const cartPopup = document.getElementById('cartPopup');
+const cartItems = document.getElementById('cartItems');
+const cartCount = document.getElementById('cartCount');
+const closeCartButton = document.getElementById('closeCartButton');
+const shareButton = document.getElementById('shareButton');
+const qrButton = document.getElementById('qrButton');
+const qrModal = document.getElementById('qrModal');
+const qrCodeContainer = document.getElementById('qrCode');
+const closeQrButton = document.getElementById('closeQrButton');
 
 // Fetch and render categories and items
 async function fetchData() {
@@ -34,14 +26,15 @@ async function fetchData() {
         // Sort collections by title
         collections.sort((a, b) => a.title.localeCompare(b.title));
 
-        // Render categories in drawer
-        categoryList.innerHTML = collections.map(collection => `
-                <a href="#${collection._id}" 
-                   class="category-link block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                   data-category-id="${collection._id}">
-                    ${collection.title}
-                    <span class="text-gray-500 text-sm">(${collection.count})</span>
-                </a>
+        // Render categories in tabs
+        categoryTabs.innerHTML = collections.map(collection => `
+                <li>
+                    <a href="#${collection._id}" 
+                       class="category-tab block px-4 py-2"
+                       data-category-id="${collection._id}">
+                        ${collection.title}
+                    </a>
+                </li>
             `).join('');
 
         // Fetch and render items for each category
@@ -75,6 +68,11 @@ async function fetchData() {
                                         <span class="menu-item-price">${item.excerpt ? item.excerpt : ''}₺</span>
                                     </div>
                                     <p class="menu-item-desc">${item.note ? item.note : ''}</p>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-button" onclick="updateQuantity('${item.title}', '${item.excerpt}', -1)">-</button>
+                                        <span id="quantity-${item.title}" class="quantity">0</span>
+                                        <button class="quantity-button" onclick="updateQuantity('${item.title}', '${item.excerpt}', 1)">+</button>
+                                    </div>
                                 </div>
                             </article>
                         `).join('')}
@@ -87,9 +85,9 @@ async function fetchData() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    document.querySelectorAll('.category-link').forEach(link => {
-                        link.classList.toggle('active',
-                            link.getAttribute('data-category-id') === entry.target.id);
+                    document.querySelectorAll('.category-tab').forEach(tab => {
+                        tab.classList.toggle('active',
+                            tab.getAttribute('data-category-id') === entry.target.id);
                     });
                 }
             });
@@ -104,18 +102,12 @@ async function fetchData() {
         });
 
         // Smooth scroll to category
-        document.querySelectorAll('.category-link').forEach(link => {
-            link.addEventListener('click', (e) => {
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
+                const targetId = tab.getAttribute('href').substring(1);
                 const targetSection = document.getElementById(targetId);
                 targetSection.scrollIntoView({ behavior: 'smooth' });
-
-                if (window.innerWidth < 1024) {
-                    drawer.classList.remove('translate-x-0');
-                    drawer.classList.add('-translate-x-full');
-                    body.classList.remove('drawer-open');
-                }
             });
         });
 
@@ -124,5 +116,60 @@ async function fetchData() {
         menuContent.innerHTML = '<p class="text-red-500">Failed to load menu items. Please try again later.</p>';
     }
 }
+
+function updateQuantity(title, price, change) {
+    const item = cart.find(i => i.title === title);
+    if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+            cart.splice(cart.indexOf(item), 1);
+        }
+    } else if (change > 0) {
+        cart.push({ title, price, quantity: change });
+    }
+    document.getElementById(`quantity-${title}`).textContent = item ? item.quantity : 0;
+    updateCartCount();
+}
+
+function updateCartCount() {
+    cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+}
+
+cartButton.addEventListener('click', () => {
+    cartPopup.classList.toggle('hidden');
+    renderCartItems();
+});
+
+closeCartButton.addEventListener('click', () => {
+    cartPopup.classList.add('hidden');
+});
+
+function renderCartItems() {
+    cartItems.innerHTML = cart.map(item => `
+        <li class="flex justify-between items-center">
+            <span>${item.title} x ${item.quantity}</span>
+            <span>${item.price}₺</span>
+        </li>
+    `).join('');
+}
+
+shareButton.addEventListener('click', () => {
+    const cartItemsText = cart.map(item => `${item.title} x ${item.quantity} - ${item.price}₺`).join('\n');
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(cartItemsText)}`;
+    window.open(whatsappUrl, '_blank');
+});
+
+qrButton.addEventListener('click', () => {
+    const cartItemsText = cart.map(item => `${item.title} x ${item.quantity} - ${item.price}₺`).join('\n');
+    qrCodeContainer.innerHTML = '';
+    QRCode.toCanvas(qrCodeContainer, cartItemsText, function (error) {
+        if (error) console.error(error);
+        qrModal.classList.remove('hidden');
+    });
+});
+
+closeQrButton.addEventListener('click', () => {
+    qrModal.classList.add('hidden');
+});
 
 fetchData();

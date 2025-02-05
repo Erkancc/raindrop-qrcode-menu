@@ -7,46 +7,76 @@
     <title>Restaurant Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-gray-100">
     <div class="overlay"></div>
-    <div class="flex h-screen overflow-hidden">
-        <!-- Drawer Menu -->
-        <div id="drawer" class="fixed lg:relative w-64 h-full bg-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
-            <div class="bg-gray-600 relative">
-                <h2 class="text-white text-xl p-4">Kategoriler</h2>
-                <button id="close-button" class="text-white text-2xl focus:outline-none absolute right-4 top-0 translate-y-2/4">
-                    ✕
+    <div class="flex flex-col h-screen overflow-hidden">
+        <!-- Header -->
+        <header class="bg-slate-100 shadow-md lg:flex items-center justify-between sticky top-0 z-30">
+            <div class="relative h-14 flex items-center justify-center">
+                <button id="menuToggle" class="p-4 lg:hidden absolute left-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <div class="text-2xl font-semibold text-center">Restaurant Menu</div>
+            </div>
+            <div class="relative h-14 flex items-center justify-center">
+                <button id="cartButton" class="p-4 relative">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5H19M7 13l-1.5 6h11L17 13M5 21h2a2 2 0 002-2H5a2 2 0 00-2 2h2zm10 0h2a2 2 0 002-2h-4a2 2 0 00-2 2h2z"></path>
+                    </svg>
+                    <span id="cartCount" class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
                 </button>
             </div>
-            <div class="px-4 pb-4">
-                <nav id="categoryList" class="space-y-2">
-                    <!-- Categories will be populated here -->
-                </nav>
+        </header>
+
+        <!-- Category Tabs -->
+        <nav id="categoryTabs" class="bg-white shadow-md sticky top-14 z-20">
+            <div class="container mx-auto px-4">
+                <ul class="flex space-x-4 overflow-x-auto">
+                    <!-- Category tabs will be populated here -->
+                </ul>
             </div>
-        </div>
+        </nav>
 
         <!-- Main Content -->
-        <div class="flex-1 overflow-y-auto">
-            <header class="bg-slate-100 shadow-md lg:flex items-center justify-between sticky top-0 z-30">
-                <div class="relative h-14 flex items-center justify-center">
-                    <button id="menuToggle" class="p-4 lg:hidden absolute left-3">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                    <div class="text-2xl font-semibold text-center">Restaurant Menu</div>
-                </div>
-            </header>
+        <main class="flex-1 overflow-y-auto">
+            <div id="menuContent" class="container mx-auto px-4 space-y-8">
+                <!-- Menu items will be populated here -->
+            </div>
+        </main>
+    </div>
 
-            <main class="container mx-auto px-4">
-                <div id="menuContent" class="space-y-8">
-                    <!-- Menu items will be populated here -->
-                </div>
-            </main>
+    <!-- Cart Popup -->
+    <div id="cartPopup" class="fixed bottom-0 right-0 bg-white shadow-lg p-4 w-64 hidden">
+        <h2 class="text-xl font-bold mb-4">Sepet</h2>
+        <ul id="cartItems" class="space-y-2">
+            <!-- Cart items will be populated here -->
+        </ul>
+        <button id="shareButton" class="mt-4 bg-green-500 text-white px-4 py-2 rounded flex items-center justify-center">
+            <i class="fab fa-whatsapp w-6 h-6 mr-2"></i>
+            WhatsApp ile Paylaş
+        </button>
+        <button id="qrButton" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded flex items-center justify-center">
+            <i class="fas fa-qrcode w-6 h-6 mr-2"></i>
+            QR Oluştur
+        </button>
+        <button id="closeCartButton" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Kapat</button>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-4 rounded">
+            <h2 class="text-xl font-bold mb-4">QR Kod</h2>
+            <div id="qrCode"></div>
+            <button id="closeQrButton" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Kapat</button>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="main.js"></script>
 </body>
 
