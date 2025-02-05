@@ -26,8 +26,9 @@ section {
     gap: 1rem;
     align-items: center;
     border-radius: 1rem;
-    background-color: white;
+    background-color: #2d3748;
     margin-bottom: 1rem;
+    color: white;
 }
 
 .menu-item-image {
@@ -58,12 +59,12 @@ section {
 }
 
 .menu-item-tags {
-    color: #666;
+    color: #a0aec0;
     font-size: 0.875rem;
 }
 
 .placeholder-image {
-    background-color: #f3f4f6;
+    background-color: #4a5568;
     display: flex;
     align-items: center;
     justify-content: center;

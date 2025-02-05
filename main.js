@@ -162,10 +162,15 @@ shareButton.addEventListener('click', () => {
 qrButton.addEventListener('click', () => {
     const cartItemsText = cart.map(item => `${item.title} x ${item.quantity} - ${item.price}₺`).join('\n');
     qrCodeContainer.innerHTML = '';
-    QRCode.toCanvas(qrCodeContainer, cartItemsText, function (error) {
-        if (error) console.error(error);
-        qrModal.classList.remove('hidden');
+    new QRCode(qrCodeContainer, {
+        text: cartItemsText,
+        width: 153, // %20 büyütülmüş genişlik
+        height: 153, // %20 büyütülmüş yükseklik
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
+    qrModal.classList.remove('hidden');
 });
 
 closeQrButton.addEventListener('click', () => {

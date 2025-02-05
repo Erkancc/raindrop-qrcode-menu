@@ -10,31 +10,23 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-900 text-white dark:bg-gray-900 dark:text-white">
     <div class="overlay"></div>
     <div class="flex flex-col h-screen overflow-hidden">
         <!-- Header -->
-        <header class="bg-slate-100 shadow-md lg:flex items-center justify-between sticky top-0 z-30">
+        <header class="bg-slate-800 shadow-md lg:flex items-center justify-between sticky top-0 z-30 dark:bg-slate-800">
             <div class="relative h-14 flex items-center justify-center">
                 <button id="menuToggle" class="p-4 lg:hidden absolute left-3">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
                 <div class="text-2xl font-semibold text-center">Restaurant Menu</div>
             </div>
-            <div class="relative h-14 flex items-center justify-center">
-                <button id="cartButton" class="p-4 relative">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5H19M7 13l-1.5 6h11L17 13M5 21h2a2 2 0 002-2H5a2 2 0 00-2 2h2zm10 0h2a2 2 0 002-2h-4a2 2 0 00-2 2h2z"></path>
-                    </svg>
-                    <span id="cartCount" class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
-                </button>
-            </div>
         </header>
 
         <!-- Category Tabs -->
-        <nav id="categoryTabs" class="bg-white shadow-md sticky top-14 z-20">
+        <nav id="categoryTabs" class="bg-slate-800 shadow-md sticky top-14 z-20 dark:bg-slate-800">
             <div class="container mx-auto px-4">
                 <ul class="flex space-x-4 overflow-x-auto">
                     <!-- Category tabs will be populated here -->
@@ -50,12 +42,22 @@
         </main>
     </div>
 
+    <!-- Floating Cart Button -->
+    <button id="cartButton" class="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartCount" class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
+    </button>
+
     <!-- Cart Popup -->
-    <div id="cartPopup" class="fixed bottom-0 right-0 bg-white shadow-lg p-4 w-64 hidden">
+    <div id="cartPopup" class="fixed bottom-0 right-0 bg-slate-800 shadow-lg p-4 w-64 hidden dark:bg-slate-800">
         <h2 class="text-xl font-bold mb-4">Sepet</h2>
         <ul id="cartItems" class="space-y-2">
             <!-- Cart items will be populated here -->
         </ul>
+        <div class="mt-4">
+            <span class="font-bold">Toplam Tutar: </span>
+            <span id="totalPrice">0₺</span>
+        </div>
         <button id="shareButton" class="mt-4 bg-green-500 text-white px-4 py-2 rounded flex items-center justify-center">
             <i class="fab fa-whatsapp w-6 h-6 mr-2"></i>
             WhatsApp ile Paylaş
@@ -69,14 +71,14 @@
 
     <!-- QR Code Modal -->
     <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white p-4 rounded">
+        <div class="bg-slate-800 p-4 rounded dark:bg-slate-800">
             <h2 class="text-xl font-bold mb-4">QR Kod</h2>
             <div id="qrCode"></div>
             <button id="closeQrButton" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Kapat</button>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/easyqrcodejs@4.4.4/dist/easy.qrcode.min.js"></script>
     <script src="main.js"></script>
 </body>
 
