@@ -7,6 +7,7 @@ const cartButton = document.getElementById('cartButton');
 const cartPopup = document.getElementById('cartPopup');
 const cartItems = document.getElementById('cartItems');
 const cartCount = document.getElementById('cartCount');
+const totalPrice = document.getElementById('totalPrice');
 const closeCartButton = document.getElementById('closeCartButton');
 const shareButton = document.getElementById('shareButton');
 const qrButton = document.getElementById('qrButton');
@@ -133,15 +134,18 @@ function updateQuantity(title, price, change) {
 
 function updateCartCount() {
     cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+    totalPrice.textContent = cart.reduce((total, item) => total + (item.price * item.quantity), 0) + '₺';
 }
 
 cartButton.addEventListener('click', () => {
     cartPopup.classList.toggle('hidden');
+    cartButton.classList.toggle('hidden'); // Yüzen butonu gizle/göster
     renderCartItems();
 });
 
 closeCartButton.addEventListener('click', () => {
     cartPopup.classList.add('hidden');
+    cartButton.classList.remove('hidden'); // Yüzen butonu göster
 });
 
 function renderCartItems() {
@@ -151,6 +155,7 @@ function renderCartItems() {
             <span>${item.price}₺</span>
         </li>
     `).join('');
+    updateCartCount();
 }
 
 shareButton.addEventListener('click', () => {

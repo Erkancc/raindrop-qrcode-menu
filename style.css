@@ -130,3 +130,32 @@ section {
 #qrModal {
     z-index: 70;
 }
+
+#cartButton {
+    z-index: 80;
+}
+
+.banner-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 400px; /* Banner yüksekliği */
+}
+
+.banner-slide {
+    display: flex;
+    width: 300%; /* 3 banner için genişlik */
+    animation: slide 15s infinite;
+}
+
+.banner-image {
+    width: 600px; /* Banner genişliği */
+    height: 400px; /* Banner yüksekliği */
+}
+
+@keyframes slide {
+    0% { transform: translateX(0); }
+    33.33% { transform: translateX(-33.33%); }
+    66.66% { transform: translateX(-66.66%); }
+    100% { transform: translateX(0); }
+}

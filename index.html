@@ -25,6 +25,15 @@
             </div>
         </header>
 
+        <!-- Slide Banner -->
+        <div class="banner-container overflow-hidden relative">
+            <div class="banner-slide flex transition-transform duration-500 ease-in-out">
+                <img src="https://via.placeholder.com/600x400?text=Banner+1" alt="Banner 1" class="banner-image">
+                <img src="https://via.placeholder.com/600x400?text=Banner+2" alt="Banner 2" class="banner-image">
+                <img src="https://via.placeholder.com/600x400?text=Banner+3" alt="Banner 3" class="banner-image">
+            </div>
+        </div>
+
         <!-- Category Tabs -->
         <nav id="categoryTabs" class="bg-slate-800 shadow-md sticky top-14 z-20 dark:bg-slate-800">
             <div class="container mx-auto px-4">
@@ -43,9 +52,10 @@
     </div>
 
     <!-- Floating Cart Button -->
-    <button id="cartButton" class="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg">
+    <button id="cartButton" class="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg flex items-center">
         <i class="fas fa-shopping-cart"></i>
-        <span id="cartCount" class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
+        <span class="ml-2">Siparişlerim</span>
+        <span id="cartCount" class="ml-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
     </button>
 
     <!-- Cart Popup -->
